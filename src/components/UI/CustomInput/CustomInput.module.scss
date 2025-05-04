@@ -1,0 +1,48 @@
+@import "../../../styles/textFont.module";
+
+.customInputWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.customInputLabel {
+  @extend .textBasic;
+  margin-bottom: 4px;
+}
+
+.inputWithIconWrapper {
+  position: relative;
+}
+
+.inputIcon {
+  position: absolute;
+  top: 50%;
+  left: 12px;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: #999;
+}
+
+.customInput {
+  @extend .textBasic;
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #d9d9d9;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.customInput:focus {
+  border-color: #4096ff;
+}
+
+.customInputError {
+  border-color: #ff4d4f;
+}
+
+.customInputErrorMessage {
+  @extend .textBasic;
+  color: #ff4d4f;
+  font-size: 14px;
+}

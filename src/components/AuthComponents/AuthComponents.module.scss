@@ -1,0 +1,62 @@
+@import "../../styles/textFont.module";
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px;
+  min-height: 100vh;
+  background-color: #f0f2f5;
+}
+
+.formBox {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 100%;
+  max-width: 400px;
+  background: #ffffff;
+  padding: 32px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.customButtonRegistration {
+  @extend .textBasic;
+  width: 100%;
+  padding: 12px;
+  margin-top: 24px;
+  background-color: #1890ff;
+  border: none;
+  color: white;
+  font-size: 16px;
+  font-weight: 500;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #40a9ff;
+  }
+}
+
+.account{
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+
+  .accountText{
+    opacity: 0.75;
+  }
+
+  .accountLink{
+    color: #0B7BFF;
+    background-color: white;
+    text-decoration: none;
+    border: none;
+  }
+
+  .accountLink:focus:active:hover{
+    cursor: pointer;
+  }
+}
