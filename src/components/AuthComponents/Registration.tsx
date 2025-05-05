@@ -48,7 +48,6 @@ export const RegistrationForm: React.FC = () => {
         />
 
         <CustomInput
-          required={undefined}
           label={'Почта'}
           placeholder={'email@example.com'}
           icon={<MailOutlined />}
@@ -57,7 +56,6 @@ export const RegistrationForm: React.FC = () => {
         />
 
         <CustomInput
-          required={undefined}
           label={'Пароль'}
           placeholder={'Введите пароль'}
           type={'password'}
