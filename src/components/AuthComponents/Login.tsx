@@ -5,8 +5,9 @@ import { Typography } from 'antd';
 import { MailOutlined, LockOutlined } from '@ant-design/icons';
 import { CustomInput } from '../UI/CustomInput/CustomInput';
 import styles from './AuthComponents.module.scss';
-import { LoginFormData, LoginSchema } from '@/models/AuthTypes';
+import { LoginFormData, LoginSchema } from '@/models/auth/AuthValidation';
 import Link from 'next/link';
+import { useLogin } from '@/hooks/auth/useLogin';
 
 const { Title } = Typography;
 
@@ -18,9 +19,10 @@ export const LoginForm: React.FC = () => {
   } = useForm<LoginFormData>({
     resolver: zodResolver(LoginSchema),
   });
+  const login = useLogin();
 
   const onSubmit = (data: LoginFormData) => {
-    console.log('Submitted:', data);
+    login.mutate(data);
   };
 
   return (

@@ -39,7 +39,8 @@ api.interceptors.response.use(
     if (error.response.status === 401 && !isRefreshing) {
       isRefreshing = true;
       try {
-        const response = await axios.post('/auth/refresh', {}, { withCredentials: true });
+        api.defaults.withCredentials = true;
+        const response = await api.post('/auth/refresh');
         const newToken = response.data.accessToken;
         saveToken(newToken);
         api.defaults.headers.common['Authorization'] = `Bearer ${newToken}`; //токен обновляется глобально для всех следующих запросов
@@ -47,7 +48,6 @@ api.interceptors.response.use(
         return api(originalRequest); //повторный запрос на тот же адрес
       } catch (err) {
         // очистить данные пользователя и перенаправить на страницу входа
-        window.location.href = '/login';
         return Promise.reject(err);
       } finally {
         isRefreshing = false;

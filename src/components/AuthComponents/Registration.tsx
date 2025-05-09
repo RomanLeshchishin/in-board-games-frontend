@@ -6,8 +6,10 @@ import { Typography } from 'antd';
 import { MailOutlined, LockOutlined, UserOutlined } from '@ant-design/icons';
 import { CustomInput } from '../UI/CustomInput/CustomInput';
 import styles from './AuthComponents.module.scss';
-import { RegisterFormData, RegisterSchema } from '@/models/AuthTypes';
+import { RegisterFormData, RegisterSchema } from '@/models/auth/AuthValidation';
 import Link from 'next/link';
+import { useRegister } from '@/hooks/auth/useRegister';
+import { Role } from '@/models/IUser';
 
 const { Title } = Typography;
 
@@ -21,8 +23,10 @@ export const RegistrationForm: React.FC = () => {
     mode: 'onChange',
   });
 
+  const registerMutation = useRegister();
+
   const onSubmit = (data: RegisterFormData) => {
-    console.log('Submitted:', data);
+    registerMutation.mutate({ payload: data, role: Role.USER });
   };
 
   return (
