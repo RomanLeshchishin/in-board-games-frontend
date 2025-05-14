@@ -12,7 +12,6 @@ export function useAppQuery<TData, TError = unknown, TVariables = void>(
     retry: 1,
     staleTime: 1000 * 60 * 60 * 4, // 4 часа
     refetchOnWindowFocus: false,
-    enabled: variables !== undefined,
     ...options,
   });
 }
