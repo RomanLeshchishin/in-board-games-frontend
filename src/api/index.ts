@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getToken, saveToken } from '@/localStorage/user';
+import { deleteToken, deleteUser, getToken, saveToken } from '@/localStorage/user';
 
 let isRefreshing = false;
 let subscribers: ((token: string) => void)[] = [];
@@ -47,7 +47,8 @@ api.interceptors.response.use(
         onTokenRefreshed(newToken);
         return api(originalRequest); //повторный запрос на тот же адрес
       } catch (err) {
-        // очистить данные пользователя и перенаправить на страницу входа
+        deleteUser();
+        deleteToken();
         return Promise.reject(err);
       } finally {
         isRefreshing = false;

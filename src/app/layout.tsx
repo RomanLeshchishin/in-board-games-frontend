@@ -1,20 +1,10 @@
 'use client';
-import { Geist, Geist_Mono } from 'next/font/google';
 import '@ant-design/v5-patch-for-react-19';
 import './globals.css';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { useState } from 'react';
-
-const geistSans = Geist({
-  variable: '--font-geist-sans',
-  subsets: ['latin'],
-});
-
-const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
-  subsets: ['latin'],
-});
+import StoreProvider from '@/components/StoreProvider/StoreProvider';
 
 export default function RootLayout({
   children,
@@ -26,10 +16,12 @@ export default function RootLayout({
   return (
     <html lang='ru'>
       <body>
-        <QueryClientProvider client={queryClient}>
-          {children}
-          <ReactQueryDevtools initialIsOpen={false} />
-        </QueryClientProvider>
+        <StoreProvider>
+          <QueryClientProvider client={queryClient}>
+            {children}
+            <ReactQueryDevtools initialIsOpen={false} />
+          </QueryClientProvider>
+        </StoreProvider>
       </body>
     </html>
   );

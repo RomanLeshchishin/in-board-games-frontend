@@ -5,7 +5,6 @@ import { saveToken, saveUser } from '@/localStorage/user';
 export const useRegister = () => {
   return useAppMutation(register, {
     onSuccess: data => {
-      console.log(data);
       saveToken(data.accessToken);
       saveUser(data.user);
     },
