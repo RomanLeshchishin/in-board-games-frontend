@@ -12,8 +12,8 @@ export const MainPage = () => {
     <div className={styles.mainBlock}>
       <Sidebar selectedKey={''} onSelect={() => {}} />
       <div className={styles.mainContent}>
-        <SearchBar value={''} onSearch={() => {}} onChange={() => {}} />
-        <FilterPanel filters={[]} onChange={() => {}} onApply={() => {}} onReset={() => {}} />
+        <SearchBar profiles={profiles} />
+        <FilterPanel />
         <div className={styles.profileCards}>
           {isLoading ? (
             <div>Загрузка...</div>
