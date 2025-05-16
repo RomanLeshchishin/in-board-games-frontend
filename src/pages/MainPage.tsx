@@ -5,9 +5,13 @@ import FilterPanel from '@/components/FilterPanel/FilterPanel';
 import ProfileCard from '@/components/ProfileCard/ProfileCard';
 import { UserProfileCard } from '@/components/UserProfileCard/UserProfileCard';
 import { useAllProfiles } from '@/hooks/profile/useAllProfiles';
+import { useProfile } from '@/hooks/profile/useProfile';
+import { getUser } from '@/localStorage/user';
 
 export const MainPage = () => {
+  const user = getUser();
   const { data: profiles = [], isLoading, error } = useAllProfiles();
+  const { data: profile } = useProfile(user?.id || '');
   return (
     <div className={styles.mainBlock}>
       <Sidebar selectedKey={''} onSelect={() => {}} />
@@ -28,7 +32,12 @@ export const MainPage = () => {
           )}
         </div>
       </div>
-      <UserProfileCard profile={{}} />
+      {user &&
+        (!profile?.user ? (
+          <div className={styles.profileLoading}>Загрузка профиля...</div>
+        ) : (
+          <UserProfileCard profile={profile} />
+        ))}
     </div>
   );
 };

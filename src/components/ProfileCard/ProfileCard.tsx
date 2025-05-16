@@ -11,7 +11,6 @@ interface IProfileCardProps {
 
 export const ProfileCard = ({ profileCard }: IProfileCardProps) => {
   const { userId, user, avatar, age, about } = profileCard;
-
   const { data, isLoading, isError } = useFormInterests(userId);
 
   if (!profileCard) {
@@ -25,7 +24,7 @@ export const ProfileCard = ({ profileCard }: IProfileCardProps) => {
       hoverable
     >
       <div className={styles.profileHeader}>
-        <Card.Meta title={'Роман, 22'} />
+        <Card.Meta title={`${user.firstName}`} />
         <HeartOutlined className={styles.heartIcon} />
       </div>
 
@@ -34,7 +33,7 @@ export const ProfileCard = ({ profileCard }: IProfileCardProps) => {
       <div className={styles.profileTags}>
         {isLoading && <Spin size={'small'} />}
         {isError && <div>Ошибка загрузки интересов</div>}
-        {data?.interests?.map(interest => (
+        {data?.interests.map(interest => (
           <Tag color={'blue'} key={interest}>
             {interest}
           </Tag>

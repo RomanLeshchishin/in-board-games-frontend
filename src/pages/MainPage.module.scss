@@ -2,14 +2,12 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  gap: 40px;
 }
 
 .mainBlock {
   display: flex;
-  justify-content: space-between;
   flex-direction: row;
-  gap: 10px;
+  gap: 250px;
 }
 
 .mainContent {

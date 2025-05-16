@@ -1,8 +1,8 @@
 import { api } from '@/api';
 import { IProfile, UpdateProfileData } from '@/models/IProfile';
 
-export const getProfileById = async (id: string): Promise<IProfile> => {
-  const { data } = await api.get(`/profile/id/${id}`);
+export const getProfileByUserId = async (userId: string): Promise<IProfile> => {
+  const { data } = await api.get(`/profile/id/${userId}`);
   return data;
 };
 
