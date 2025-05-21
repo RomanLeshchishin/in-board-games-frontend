@@ -1,43 +1,52 @@
-import styles from './MainPage.module.scss';
-import { Sidebar } from '@/components/Sidebar/Sidebar';
+import styles from './SidebarPages.module.scss';
 import SearchBar from '@/components/SearchBar/SearchBar';
 import FilterPanel from '@/components/FilterPanel/FilterPanel';
-import ProfileCard from '@/components/ProfileCard/ProfileCard';
-import { UserProfileCard } from '@/components/UserProfileCard/UserProfileCard';
+import ProfileCard from '@/components/Cards/ProfileCard';
 import { useAllProfiles } from '@/hooks/profile/useAllProfiles';
-import { useProfile } from '@/hooks/profile/useProfile';
-import { getUser } from '@/localStorage/user';
+import { CustomLayout } from '@/components/UI/CustomLayout/CustomLayout';
+import { QueryKey } from '@/const/queryKey';
+import { useQueryClient } from '@tanstack/react-query';
 
 export const MainPage = () => {
-  const user = getUser();
   const { data: profiles = [], isLoading, error } = useAllProfiles();
-  const { data: profile } = useProfile(user?.id || '');
+  const queryClient = useQueryClient();
+
+  const onSearch = (inputSearch: string) => {
+    const searchProfiles = () => {
+      const inpSearch = inputSearch.trim().toLowerCase();
+      if (inpSearch !== '') {
+        const filterProfiles = profiles.filter(profile =>
+          `${profile.user.firstName.toLowerCase()} ${profile.user.lastName.toLowerCase()}`.includes(inpSearch),
+        );
+        if (filterProfiles.length === 0) {
+          return profiles.filter(profile => profile.about?.toLowerCase().includes(inpSearch));
+        } else {
+          return filterProfiles;
+        }
+      } else {
+        return profiles;
+      }
+    };
+    queryClient.setQueryData([QueryKey.PROFILE_CARDS], searchProfiles());
+  };
+
   return (
-    <div className={styles.mainBlock}>
-      <Sidebar selectedKey={''} onSelect={() => {}} />
-      <div className={styles.mainContent}>
-        <SearchBar profiles={profiles} />
-        <FilterPanel />
-        <div className={styles.profileCards}>
-          {isLoading ? (
-            <div>Загрузка...</div>
-          ) : error ? (
-            <div>Ошибка загрузки</div>
-          ) : (
-            <div className={styles.profileCards}>
-              {profiles.map(profile => (
-                <ProfileCard key={profile.id} profileCard={profile} />
-              ))}
-            </div>
-          )}
-        </div>
-      </div>
-      {user &&
-        (!profile?.user ? (
-          <div className={styles.profileLoading}>Загрузка профиля...</div>
+    <CustomLayout>
+      <SearchBar data={profiles} onSearch={onSearch} />
+      <FilterPanel />
+      <div className={styles.cardWrapper}>
+        {isLoading ? (
+          <div>Загрузка...</div>
+        ) : error ? (
+          <div>Ошибка загрузки</div>
         ) : (
-          <UserProfileCard profile={profile} />
-        ))}
-    </div>
+          <div className={styles.cardWrapper}>
+            {profiles.map(profile => (
+              <ProfileCard key={profile.id} cardData={profile} />
+            ))}
+          </div>
+        )}
+      </div>
+    </CustomLayout>
   );
 };

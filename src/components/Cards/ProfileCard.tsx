@@ -5,11 +5,11 @@ import { Button, Spin, Tag } from 'antd';
 import { HeartOutlined, UserOutlined } from '@ant-design/icons';
 
 interface IProfileCardProps {
-  profileCard: IProfile;
+  cardData: IProfile;
 }
 
-export const ProfileCard = ({ profileCard }: IProfileCardProps) => {
-  const { userId, user, avatar, age, about } = profileCard;
+export const ProfileCard = ({ cardData }: IProfileCardProps) => {
+  const { userId, user, avatar, age, about } = cardData;
   const { data, isLoading, isError } = useFormInterests(userId);
   const userCover: CardCover = {
     alt: user.firstName,
@@ -20,7 +20,7 @@ export const ProfileCard = ({ profileCard }: IProfileCardProps) => {
     description: about || '',
   };
 
-  if (!profileCard) {
+  if (!cardData) {
     return <div>No profile data available.</div>;
   }
 

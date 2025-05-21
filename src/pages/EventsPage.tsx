@@ -1,43 +1,53 @@
-import styles from './MainPage.module.scss';
+import styles from './SidebarPages.module.scss';
 import { Sidebar } from '@/components/Sidebar/Sidebar';
 import SearchBar from '@/components/SearchBar/SearchBar';
 import FilterPanel from '@/components/FilterPanel/FilterPanel';
-import ProfileCard from '@/components/ProfileCard/ProfileCard';
-import { UserProfileCard } from '@/components/UserProfileCard/UserProfileCard';
-import { useAllProfiles } from '@/hooks/profile/useAllProfiles';
-import { useProfile } from '@/hooks/profile/useProfile';
-import { getUser } from '@/localStorage/user';
+import EventCard from '@/components/Cards/EventCard';
+import { useAllEvents } from '@/hooks/events/useAllEvents';
+import { QueryKey } from '@/const/queryKey';
+import { useQueryClient } from '@tanstack/react-query';
 
 export const EventsPage = () => {
-  const user = getUser();
-  const { data: profiles = [], isLoading, error } = useAllProfiles();
-  const { data: profile } = useProfile(user?.id || '');
+  const { data: events = [], isLoading, error } = useAllEvents();
+  const queryClient = useQueryClient();
+
+  const onSearch = (inputSearch: string) => {
+    const searchEvents = () => {
+      const inpSearch = inputSearch.trim().toLowerCase();
+      if (inpSearch !== '') {
+        const filterEvents = events.filter(event => event.title.includes(inpSearch));
+        if (filterEvents.length === 0) {
+          return events.filter(event => event.place?.toLowerCase().includes(inpSearch));
+        } else {
+          return filterEvents;
+        }
+      } else {
+        return events;
+      }
+    };
+    queryClient.setQueryData([QueryKey.EVENTS], searchEvents());
+  };
+
   return (
     <div className={styles.mainBlock}>
       <Sidebar selectedKey={''} onSelect={() => {}} />
       <div className={styles.mainContent}>
-        <SearchBar profiles={profiles} />
+        <SearchBar data={events} onSearch={onSearch} />
         <FilterPanel />
-        <div className={styles.profileCards}>
+        <div className={styles.cardWrapper}>
           {isLoading ? (
             <div>Загрузка...</div>
           ) : error ? (
             <div>Ошибка загрузки</div>
           ) : (
-            <div className={styles.profileCards}>
-              {profiles.map(profile => (
-                <ProfileCard key={profile.id} profileCard={profile} />
+            <div className={styles.cardWrapper}>
+              {events.map(event => (
+                <EventCard key={event.id} cardData={event} />
               ))}
             </div>
           )}
         </div>
       </div>
-      {user &&
-        (!profile?.user ? (
-          <div className={styles.profileLoading}>Загрузка профиля...</div>
-        ) : (
-          <UserProfileCard profile={profile} />
-        ))}
     </div>
   );
 };

@@ -22,12 +22,13 @@ export enum CardTemplate {
 interface CustomCardProps {
   template: CardTemplate;
   cover: CardCover;
-  tags: ReactElement<any, any>;
+  tags?: ReactElement<any, any>;
   cardInf: CardInf;
+  additionalInf?: ReactElement<any, any>;
   cardButtons: React.ReactNode[];
 }
 
-export const CustomCard = ({ template, cover, tags, cardInf, cardButtons = [] }: CustomCardProps) => {
+export const CustomCard = ({ template, cover, tags, cardInf, additionalInf, cardButtons = [] }: CustomCardProps) => {
   return (
     <Card
       className={styles.card}
@@ -43,7 +44,9 @@ export const CustomCard = ({ template, cover, tags, cardInf, cardButtons = [] }:
         <div className={styles.cardTitle}>{cardInf.title}</div>
       )}
 
-      <div className={styles.cardTags}>{tags}</div>
+      {tags && <div className={styles.cardTags}>{tags}</div>}
+
+      {additionalInf && <div>{additionalInf}</div>}
 
       {cardInf.description && <div className={styles.cardDescription}>{cardInf.description}</div>}
 
