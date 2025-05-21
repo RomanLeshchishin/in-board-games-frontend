@@ -1,0 +1,57 @@
+.sidebarMenu {
+  width: 290px;
+  min-width: 200px;
+  height: 100vh;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  padding: 16px 0;
+  border-right: 1px solid #f0f0f0;
+  transition: width 0.3s ease;
+
+  @media (max-width: 768px) {
+    width: 180px;
+    min-width: 160px;
+  }
+
+  @media (max-width: 480px) {
+    width: 80px;
+    min-width: 60px;
+
+    .ant-menu-item {
+      justify-content: center;
+    }
+
+    .ant-menu-title-content {
+      display: none;
+    }
+  }
+}
+
+.logoPlaceholder {
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  padding: 12px 0;
+  margin-bottom: 16px;
+  transition: all 0.3s ease;
+}
+
+.menu {
+  border: none;
+  flex-grow: 1;
+}
+
+.buttonsBlock {
+  display: flex;
+  padding-top: 600px;
+  padding-right: 10px;
+  padding-left: 10px;
+  flex-direction: column;
+  gap: 15px;
+
+  button {
+    width: 270px;
+  }
+}
+

@@ -1,0 +1,57 @@
+.card {
+  max-width: 360px;
+  margin: auto;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.cardImage {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 12px 12px 0 0;
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 12px;
+}
+
+.cardTitle {
+  font-size: 18px;
+  font-weight: 600;
+  margin-top: 12px;
+}
+
+.heartIcon {
+  font-size: 18px;
+  color: #f5222d;
+  cursor: pointer;
+}
+
+.cardTags {
+  margin-top: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.cardDescription {
+  margin-top: 12px;
+  font-size: 14px;
+  color: #555;
+}
+
+.buttonsBlock {
+  display: flex;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+@media (max-width: 480px) {
+  .card {
+    max-width: 100%;
+  }
+}

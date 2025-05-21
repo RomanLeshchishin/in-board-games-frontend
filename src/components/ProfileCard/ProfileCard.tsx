@@ -1,9 +1,8 @@
-import React from 'react';
-import { Card, Tag, Button, Spin } from 'antd';
-import { HeartOutlined, MessageOutlined, UserOutlined } from '@ant-design/icons';
-import styles from './ProfileCard.module.scss';
 import { IProfile } from '@/models/IProfile';
 import { useFormInterests } from '@/hooks/form/useFormInterests';
+import { CardCover, CardInf, CardTemplate, CustomCard } from '@/components/UI/CustomCard/CustomCard';
+import { Button, Spin, Tag } from 'antd';
+import { HeartOutlined, UserOutlined } from '@ant-design/icons';
 
 interface IProfileCardProps {
   profileCard: IProfile;
@@ -12,42 +11,44 @@ interface IProfileCardProps {
 export const ProfileCard = ({ profileCard }: IProfileCardProps) => {
   const { userId, user, avatar, age, about } = profileCard;
   const { data, isLoading, isError } = useFormInterests(userId);
+  const userCover: CardCover = {
+    alt: user.firstName,
+    link: avatar || '',
+  };
+  const userInf: CardInf = {
+    title: `${user.firstName}, ${age || ''}`,
+    description: about || '',
+  };
 
   if (!profileCard) {
     return <div>No profile data available.</div>;
   }
 
   return (
-    <Card
-      className={styles.profileCard}
-      cover={<img alt={'Роман'} src={''} className={styles.profileAvatar} />}
-      hoverable
-    >
-      <div className={styles.profileHeader}>
-        <Card.Meta title={`${user.firstName}`} />
-        <HeartOutlined className={styles.heartIcon} />
-      </div>
-
-      <div className={styles.profileDescription}>{'текст текст текст'}</div>
-
-      <div className={styles.profileTags}>
-        {isLoading && <Spin size={'small'} />}
-        {isError && <div>Ошибка загрузки интересов</div>}
-        {data?.interests.map(interest => (
-          <Tag color={'blue'} key={interest}>
-            {interest}
-          </Tag>
-        ))}
-      </div>
-      <div className={styles.buttonsBlock}>
-        <Button icon={<UserOutlined />} block>
+    <CustomCard
+      template={CardTemplate.PROFILE}
+      cover={userCover}
+      tags={
+        <>
+          {isLoading && <Spin size={'small'} />}
+          {isError && <div>Ошибка загрузки интересов</div>}
+          {data?.interests.map(interest => (
+            <Tag color={'blue'} key={interest}>
+              {interest}
+            </Tag>
+          ))}
+        </>
+      }
+      cardInf={userInf}
+      cardButtons={[
+        <Button key={'profile'} icon={<UserOutlined />} block>
           Профиль
-        </Button>
-        <Button type={'primary'} icon={<MessageOutlined />} block>
+        </Button>,
+        <Button key={'write'} type={'primary'} icon={<HeartOutlined />} block>
           Написать
-        </Button>
-      </div>
-    </Card>
+        </Button>,
+      ]}
+    />
   );
 };
 
