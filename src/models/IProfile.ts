@@ -4,9 +4,9 @@ export interface IProfile {
   id: string;
   userId: string;
   user: IUser;
-  avatar: string | null;
-  age: number | null;
-  about: string | null;
+  avatar?: string;
+  age?: number;
+  about?: string;
 }
 
 export interface UpdateProfileData {

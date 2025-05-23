@@ -28,7 +28,6 @@ const AddPhotos = ({ fileList, setFileList, filesToUpload, setFilesToUpload }: A
   };
 
   const handleUploadChange = ({ fileList }: { fileList: UploadFile[] }) => {
-    // Сохраняем и UploadFile для отображения и File для отправки
     setFileList(fileList);
     setFilesToUpload(fileList.map(file => file.originFileObj as File));
   };
@@ -40,7 +39,7 @@ const AddPhotos = ({ fileList, setFileList, filesToUpload, setFilesToUpload }: A
         multiple
         fileList={fileList}
         beforeUpload={beforeUpload}
-        onChange={({ fileList }) => setFileList(fileList)}
+        onChange={handleUploadChange}
         accept={'image/*'}
         listType={'picture'}
       >

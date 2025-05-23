@@ -1,10 +1,10 @@
 import { IFilterForm } from '@/models/IFilter';
-import { IGender } from '@/models/IForm';
+import { Gender } from '@/models/form/IForm';
 
 export const filterGender: IFilterForm[] = [
   { value: '', label: 'Все' },
-  { value: IGender.MALE, label: 'Мужской' },
-  { value: IGender.FEMALE, label: 'Женский' },
+  { value: Gender.MALE, label: 'Мужской' },
+  { value: Gender.FEMALE, label: 'Женский' },
 ];
 
 export const filterAge: IFilterForm[] = [
