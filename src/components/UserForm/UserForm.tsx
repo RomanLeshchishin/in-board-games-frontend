@@ -1,72 +1,71 @@
-import React from 'react';
-import { DatePicker, Select, Radio, Button, TimePicker, Checkbox } from 'antd';
-import { PhoneOutlined } from '@ant-design/icons';
-import { CustomInput } from '../UI/CustomInput/CustomInput';
-import styles from './UserProfileForm.module.scss';
-
-const { Option } = Select;
+import React, { useState } from 'react';
+import { Button, UploadFile } from 'antd';
+import styles from './UserForm.module.scss';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { CreateFormData, CreateFormSchema } from '@/models/form/UserFormValidation';
+import { useSelector } from 'react-redux';
+import { selectGames, selectInterests, selectTopics } from '@/redux/formSlice/selectors';
+import { useCreateForm } from '@/hooks/form/useCreateForm';
+import { useQueryClient } from '@tanstack/react-query';
+import { QueryKey } from '@/const/queryKey';
+import { IProfile } from '@/models/IProfile';
+import { useCreateFormModels } from '@/hooks/form/useCreateFormModels';
+import PersonalInfo from '@/components/UserForm/PersonalInfo';
+import InterestsInfo from '@/components/UserForm/InterestsInfo';
+import EventsParticipation from '@/components/UserForm/EventsParticipation';
+import ProfessionalInfo from '@/components/UserForm/ProfessionalInfo';
+import AddPhotos from '@/components/UserForm/AddPhotos';
+import { useUploadFiles } from '@/hooks/files/useUploadFiles';
+import { FileModelType } from '@/models/IFile';
 
 export const UserForm = () => {
+  const [isStudent, setIsStudent] = useState(false);
+  const [fileList, setFileList] = useState<UploadFile[]>([]);
+  const [filesToUpload, setFilesToUpload] = useState<File[]>([]);
+  const queryClient = useQueryClient();
+  const interestIds = useSelector(selectInterests);
+  const topicIds = useSelector(selectTopics);
+  const gameIds = useSelector(selectGames);
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    watch,
+    formState: { errors },
+  } = useForm<CreateFormData>({
+    resolver: zodResolver(CreateFormSchema),
+    mode: 'onChange',
+  });
+  const formValues = watch();
+  const formMutation = useCreateForm();
+  const fileMutation = useUploadFiles();
+  const formModelsMutation = useCreateFormModels();
+
+  const onSubmit = async (data: CreateFormData) => {
+    const profile = queryClient.getQueryData<IProfile>([QueryKey.PROFILE]);
+    const form = await formMutation.mutateAsync({ profileId: profile?.id || '', ...data });
+    await fileMutation.mutateAsync({ files: filesToUpload, modelId: form.id, modelType: FileModelType.FORM });
+    await formModelsMutation.mutateAsync({ interestIds, topicIds, gameIds });
+  };
+
   return (
     <form className={styles.formWrapper}>
-      <section className={styles.section}>
-        <h2>Личная информация</h2>
-        <div className={styles.row}>
-          <CustomInput label='Отчество' required />
-          <div className={styles.inputWrapper}>
-            <label className={styles.label}>
-              Дата рождения<span>*</span>
-            </label>
-            <DatePicker className={styles.fullWidth} />
-          </div>
-        </div>
-
-        <div className={styles.row}>
-          <div className={styles.radioGroup}>
-            <label className={styles.label}>
-              Пол<span>*</span>
-            </label>
-            <Radio.Group defaultValue='male'>
-              <Radio value='male'>Мужской</Radio>
-              <Radio value='female'>Женский</Radio>
-            </Radio.Group>
-          </div>
-          <CustomInput label='Номер телефона' icon={<PhoneOutlined />} placeholder='+7 (___) ___-__-__' required />
-        </div>
-
-        <CustomInput label='Адрес' placeholder='Введите ваш адрес' required />
-      </section>
-
-      <section className={styles.section}>
-        <h2>Интересы и увлечения</h2>
-        <Select className={styles.fullWidth} placeholder='Выберите интересы' mode='multiple' />
-        <div className={styles.row}>
-          <Select className={styles.fullWidth} placeholder='Выберите жанры' />
-          <Select className={styles.fullWidth} placeholder='Выберите игры' />
-        </div>
-      </section>
-
-      <section className={styles.section}>
-        <h2>Участие в мероприятиях</h2>
-        <div className={styles.row}>
-          <TimePicker className={styles.fullWidth} placeholder='Выберите время' />
-          <Select className={styles.fullWidth} defaultValue='weekly'>
-            <Option value='weekly'>Раз в неделю</Option>
-            <Option value='monthly'>Раз в месяц</Option>
-            <Option value='never'>Не планирую</Option>
-          </Select>
-        </div>
-      </section>
-
-      <section className={styles.section}>
-        <h2>Профессиональная информация</h2>
-        <CustomInput label='Профессия' required placeholder='Введите вашу профессию' />
-        <Checkbox className={styles.checkbox}>Я студент</Checkbox>
-      </section>
-
+      <PersonalInfo errors={errors} register={register} setValue={setValue} formValues={formValues} />
+      <AddPhotos
+        fileList={fileList}
+        setFileList={setFileList}
+        filesToUpload={filesToUpload}
+        setFilesToUpload={setFilesToUpload}
+      />
+      <InterestsInfo />
+      <EventsParticipation errors={errors} setValue={setValue} formValues={formValues} />
+      <ProfessionalInfo errors={errors} register={register} isStudent={isStudent} setIsStudent={setIsStudent} />
       <div className={styles.footer}>
         <Button>Отмена</Button>
-        <Button type='primary'>Сохранить</Button>
+        <Button type={'primary'} onClick={handleSubmit(onSubmit)}>
+          Сохранить
+        </Button>
       </div>
     </form>
   );
