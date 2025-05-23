@@ -6,11 +6,10 @@ import styles from './UserForm.module.scss';
 interface AddPhotosProps {
   fileList: UploadFile[];
   setFileList: React.Dispatch<React.SetStateAction<UploadFile<any>[]>>;
-  filesToUpload: File[];
   setFilesToUpload: React.Dispatch<React.SetStateAction<File[]>>;
 }
 
-const AddPhotos = ({ fileList, setFileList, filesToUpload, setFilesToUpload }: AddPhotosProps) => {
+const AddPhotos = ({ fileList, setFileList, setFilesToUpload }: AddPhotosProps) => {
   const beforeUpload = (file: File) => {
     const isImage = file.type.startsWith('image/');
     if (!isImage) {

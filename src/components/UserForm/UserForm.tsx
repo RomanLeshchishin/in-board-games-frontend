@@ -52,12 +52,7 @@ export const UserForm = () => {
   return (
     <form className={styles.formWrapper}>
       <PersonalInfo errors={errors} register={register} setValue={setValue} formValues={formValues} />
-      <AddPhotos
-        fileList={fileList}
-        setFileList={setFileList}
-        filesToUpload={filesToUpload}
-        setFilesToUpload={setFilesToUpload}
-      />
+      <AddPhotos fileList={fileList} setFileList={setFileList} setFilesToUpload={setFilesToUpload} />
       <InterestsInfo />
       <EventsParticipation errors={errors} setValue={setValue} formValues={formValues} />
       <ProfessionalInfo errors={errors} register={register} isStudent={isStudent} setIsStudent={setIsStudent} />
