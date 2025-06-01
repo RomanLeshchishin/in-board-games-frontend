@@ -13,3 +13,8 @@ export interface UpdateProfileData {
   user: IUser;
   profile: IProfile;
 }
+
+export interface IRecommendationProfile {
+  profile: IProfile;
+  compatibility: number;
+}

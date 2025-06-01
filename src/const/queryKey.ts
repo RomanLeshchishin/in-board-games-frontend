@@ -8,4 +8,5 @@ export enum QueryKey {
   TOPICS = 'topics',
   INTERESTS = 'interests',
   PROFILE = 'profile',
+  RECOMMEND_PROFILES = 'recommend-profiles',
 }

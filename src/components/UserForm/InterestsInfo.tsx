@@ -3,15 +3,15 @@ import { Select } from 'antd';
 import { addGame, addInterest, addTopic } from '@/redux/formSlice/slice';
 import React from 'react';
 import { useAppDispatch } from '@/redux/store';
-import { useInterests } from '@/hooks/interests/useInterests';
-import { useTopics } from '@/hooks/topics/useTopics';
-import { useGames } from '@/hooks/games/useGames';
+import { useAllInterests } from '@/hooks/interests/useAllInterests';
+import { useAllTopics } from '@/hooks/topics/useAllTopics';
+import { useAllGames } from '@/hooks/games/useAllGames';
 
 const InterestsInfo = () => {
   const dispatch = useAppDispatch();
-  const { data: interests } = useInterests();
-  const { data: topics } = useTopics();
-  const { data: games } = useGames();
+  const { data: interests } = useAllInterests();
+  const { data: topics } = useAllTopics();
+  const { data: games } = useAllGames();
   return (
     <section className={styles.section}>
       <h2>Интересы и увлечения</h2>
