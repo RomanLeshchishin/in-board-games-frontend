@@ -1,130 +1,150 @@
+$form-bg: #f5faff;
+$section-padding: 24px;
+$border-radius: 16px;
+$input-gap: 16px;
+$photo-block-bg: #e8f0fe;
+$error-color: #ff4d4f;
+
 .formWrapper {
-  max-width: 800px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  padding: 32px;
+  background-color: white;
+  border-radius: $border-radius;
+  max-width: 900px;
   margin: 0 auto;
-  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+
+  :global {
+    h2 {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+  }
 }
 
 .section {
-  margin-bottom: 32px;
-  padding: 24px;
-  background: #fff;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-
-  h2 {
-    margin-bottom: 24px;
-    color: #1890ff;
-    display: flex;
-    align-items: center;
-
-    svg {
-      margin-right: 8px;
-    }
-  }
+  background-color: $form-bg;
+  padding: $section-padding;
+  border-radius: $border-radius;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
 .row {
   display: flex;
   flex-wrap: wrap;
-  margin: 0 -8px 16px;
-
-  > * {
-    padding: 0 8px;
-    margin-bottom: 16px;
-  }
+  gap: $input-gap;
 }
 
-.inputWrapper,
-.selectWrapper {
-  margin-bottom: 16px;
+.alignedRow {
+  align-items: flex-end;
+}
 
-  label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: 500;
-
-    span {
-      color: #ff4d4f;
-      margin-left: 4px;
-    }
-  }
+.inputWrapper {
+  flex: 1;
+  min-width: 250px;
+  gap: 5px;
+  display: flex;
+  flex-direction: column;
 }
 
 .fullWidth {
   width: 100%;
+  height: 35px;
+}
+
+.label {
+  font-weight: normal;
+  font-size: 14px;
+  margin-bottom: 6px;
+  color: #333;
+  display: block;
+
+  span {
+    color: $error-color;
+    margin-left: 4px;
+  }
 }
 
 .error {
-  color: #ff4d4f;
+  color: $error-color;
   font-size: 12px;
-  display: block;
   margin-top: 4px;
+}
+
+.checkbox {
+  margin-top: 12px;
 }
 
 .studentFields {
   margin-top: 16px;
-  padding: 16px;
-  background: #f9f9f9;
-  border-radius: 8px;
-  border: 1px dashed #d9d9d9;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.selectWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
 .radioGroup {
-  margin-bottom: 16px;
-
-  label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: 500;
-  }
-
-  .ant-radio-group {
-    display: flex;
-    gap: 16px;
-  }
-}
-
-.checkbox {
-  margin: 16px 0;
-  display: block;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 }
 
 .footer {
   display: flex;
   justify-content: flex-end;
   gap: 16px;
-  margin-top: 32px;
   padding-top: 16px;
-  border-top: 1px solid #f0f0f0;
+  border-top: 1px solid #e5e5e5;
 }
 
-// Адаптивные стили
-@media (max-width: 768px) {
-  .section {
-    padding: 16px;
-  }
+.uploadWrapper {
+  width: 100%;
 
-  .footer {
-    flex-direction: column;
+  :global {
+    .ant-upload {
+      background-color: $photo-block-bg;
+      border: 2px dashed #91d5ff;
+      border-radius: $border-radius;
+      padding: 32px;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.3s ease;
 
-    button {
-      width: 100%;
+      &:hover {
+        border-color: #40a9ff;
+      }
+
+      .ant-upload-drag-icon {
+        font-size: 40px;
+        color: #1890ff;
+        margin-bottom: 8px;
+      }
+
+      p {
+        margin: 4px 0;
+        font-size: 14px;
+        color: #555;
+      }
     }
   }
 }
 
-@media (max-width: 576px) {
-  .formWrapper {
-    padding: 10px;
-  }
-
+@media (max-width: 768px) {
   .row {
     flex-direction: column;
-    margin: 0;
+  }
 
-    > * {
-      width: 100%;
-      padding: 0;
-    }
+  .inputWrapper {
+    min-width: 100%;
   }
 }

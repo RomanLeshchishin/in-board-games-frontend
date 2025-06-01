@@ -4,6 +4,7 @@ import { Col, Row, Select } from 'antd';
 import styles from './UserForm.module.scss';
 import { FieldErrors, UseFormRegister } from 'react-hook-form';
 import { CreateFormData } from '@/models/form/UserFormValidation';
+import CustomLabel from '@/components/UI/CustomInput/CustomLabel';
 
 const { Option } = Select;
 
@@ -20,16 +21,16 @@ const StudentInfo = ({ errors, register }: StudentInfoProps) => {
       <Row gutter={16}>
         <Col xs={24} md={12}>
           <CustomInput
-            label='Институт'
-            placeholder='Введите ваш институт'
+            label={'Институт'}
+            placeholder={'Введите ваш институт'}
             error={errors.institute?.message}
             {...register('institute')}
           />
         </Col>
         <Col xs={24} md={12}>
           <CustomInput
-            label='Направление'
-            placeholder='Введите направление'
+            label={'Направление'}
+            placeholder={'Введите направление'}
             error={errors.direction?.message}
             {...register('direction')}
           />
@@ -39,8 +40,8 @@ const StudentInfo = ({ errors, register }: StudentInfoProps) => {
       <Row gutter={16}>
         <Col xs={24} md={12}>
           <div className={styles.selectWrapper}>
-            <label>Курс*</label>
-            <Select className={styles.fullWidth} placeholder='Выберите курс' {...register('course')}>
+            <CustomLabel>Курс</CustomLabel>
+            <Select className={styles.fullWidth} placeholder={'Выберите курс'} {...register('course')}>
               {courses.map(course => (
                 <Option key={course} value={course}>
                   {course} курс

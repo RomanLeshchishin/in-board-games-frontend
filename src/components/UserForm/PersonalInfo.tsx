@@ -6,6 +6,7 @@ import { PhoneOutlined } from '@ant-design/icons';
 import React from 'react';
 import { CreateFormData } from '@/models/form/UserFormValidation';
 import { FieldErrors, UseFormRegister, UseFormSetValue } from 'react-hook-form';
+import CustomLabel from '@/components/UI/CustomInput/CustomLabel';
 
 interface IPersonalInfoProps {
   errors: FieldErrors<CreateFormData>;
@@ -21,9 +22,7 @@ const PersonalInfo = ({ errors, register, setValue, formValues }: IPersonalInfoP
       <div className={styles.row}>
         <CustomInput label={'Отчество'} error={errors.patronymic?.message} {...register('patronymic')} />
         <div className={styles.inputWrapper}>
-          <label className={styles.label}>
-            Дата рождения<span>*</span>
-          </label>
+          <CustomLabel>Дата рождения</CustomLabel>
           <DatePicker
             className={styles.fullWidth}
             status={errors.birthday ? 'error' : ''}
@@ -34,11 +33,9 @@ const PersonalInfo = ({ errors, register, setValue, formValues }: IPersonalInfoP
         </div>
       </div>
 
-      <div className={styles.row}>
+      <div className={styles.row} style={{ gap: 50 }}>
         <div className={styles.radioGroup}>
-          <label className={styles.label}>
-            Пол<span>*</span>
-          </label>
+          <CustomLabel>Пол</CustomLabel>
           <Radio.Group value={formValues.gender} onChange={e => setValue('gender', e.target.value)}>
             <Radio value={'male'}>Мужской</Radio>
             <Radio value={'female'}>Женский</Radio>

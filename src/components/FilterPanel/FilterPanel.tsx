@@ -103,7 +103,7 @@ const FilterPanel = () => {
         {/*<Button icon={<FilterOutlined />} onClick={onReset}>*/}
         {/*  Сбросить*/}
         {/*</Button>*/}
-        <Button type='primary' icon={<SearchOutlined />} onClick={onApplyFilters}>
+        <Button type={'primary'} icon={<SearchOutlined />} onClick={onApplyFilters}>
           Применить фильтры
         </Button>
       </div>

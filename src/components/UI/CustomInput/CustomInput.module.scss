@@ -9,6 +9,10 @@
 .customInputLabel {
   @extend .textBasic;
   margin-bottom: 4px;
+  
+  span {
+    color: red;
+  }
 }
 
 .inputWithIconWrapper {
