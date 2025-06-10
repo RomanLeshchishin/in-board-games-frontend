@@ -1,8 +1,11 @@
 import React from 'react';
-import { Avatar, Tag, Divider, Card } from 'antd';
+import { Avatar, Tag, Divider, Card, Button } from 'antd';
 import styles from './UserProfileCard.module.scss';
 import { IProfile } from '@/models/IProfile';
 import { useFormInterests } from '@/hooks/form/useFormInterests';
+import { useAvatarByFileId } from '@/hooks/files/useAvatarByFileId';
+import { UserOutlined } from '@ant-design/icons';
+import Link from 'next/link';
 
 interface IUserProfileCardProps {
   profile: IProfile;
@@ -10,12 +13,14 @@ interface IUserProfileCardProps {
 
 export const UserProfileCard = ({ profile }: IUserProfileCardProps) => {
   const { userId, user, avatar, age, about } = profile;
+  const { data: avatarFromServer } = avatar ? useAvatarByFileId(avatar) : {};
+  const link = avatarFromServer && !Array.isArray(avatarFromServer) ? avatarFromServer.fileLink : '';
   const { data, isLoading, isError } = useFormInterests(userId);
 
   return (
     <Card className={styles.profileInfoCard}>
       <div className={styles.profileHeader}>
-        <Avatar size={96} src={avatar} />
+        <Avatar size={96} src={link} />
         <div className={styles.profileName}>{`${user.firstName} ${user.lastName}`}</div>
         <div className={styles.profileMeta}>{age} лет</div>
       </div>
@@ -58,6 +63,11 @@ export const UserProfileCard = ({ profile }: IUserProfileCardProps) => {
       <div className={styles.section}>
         <div className={styles.sectionTitle}>Активность</div>
         {/* Можно добавить активность позже */}
+        <Link href={'/edit-profile'}>
+          <Button type={'primary'} icon={<UserOutlined />} className={styles.btn}>
+            Изменить профиль
+          </Button>
+        </Link>
       </div>
     </Card>
   );

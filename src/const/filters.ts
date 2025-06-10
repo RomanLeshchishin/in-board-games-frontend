@@ -9,7 +9,7 @@ export const filterGender: IFilterForm[] = [
 
 export const filterAge: IFilterForm[] = [
   { value: '18–21', label: '18–21' },
-  { value: '22–25', label: '22–25' },
+  { value: '22–25', label: '22-25' },
   { value: '26–30', label: '26–30' },
   { value: '31–35', label: '31–35' },
   { value: '36–40', label: '36–40' },

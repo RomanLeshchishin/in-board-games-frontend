@@ -1,7 +1,8 @@
 .mainBlock {
   display: flex;
   flex-direction: row;
-  gap: 230px;
+  gap: 10px;
+  overflow: hidden;
 }
 
 .mainContent {

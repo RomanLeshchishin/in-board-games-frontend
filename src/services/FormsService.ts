@@ -7,6 +7,6 @@ export const createForm = async (form: IForm) => {
 };
 
 export const getFormInterestsById = async (userId: string): Promise<{ interests: string[] }> => {
-  const { data } = await api.get('/form/id/interests', { params: { userId } });
+  const { data } = await api.get(`/form/id/interests/${userId}`);
   return data;
 };

@@ -78,7 +78,7 @@ const FilterPanel = () => {
         <div className={styles.filterBlock}>
           <label>Интересы</label>
           <Select
-            placeholder={'Выберите интересы'}
+            placeholder={'Выберите интерес'}
             onChange={value => dispatch(addFilter({ modelId: value, modelType: FormModelType.INTEREST }))}
             className={styles.select}
             options={
@@ -95,7 +95,66 @@ const FilterPanel = () => {
       {user && (
         <Collapse className={styles.collapse}>
           <Panel header='Дополнительные фильтры' key='1'>
-            {/* Тут можно добавить доп. поля */}
+            <div className={styles.filterBlock}>
+              <label>Жанры</label>
+              <Select
+                placeholder={'Выберите жанр'}
+                onChange={() => {}}
+                className={styles.select}
+                options={
+                  topics
+                    ? topics.map(topic => {
+                        return { value: topic.id, label: topic.title };
+                      })
+                    : []
+                }
+              />
+            </div>
+            <div className={styles.filterBlock}>
+              <label>Игры</label>
+              <Select
+                placeholder={'Выберите игру'}
+                onChange={() => {}}
+                className={styles.select}
+                options={
+                  games
+                    ? games.map(games => {
+                        return { value: games.id, label: games.title };
+                      })
+                    : []
+                }
+              />
+            </div>
+            <div className={styles.filterBlock}>
+              <label>Удобное время</label>
+              <Select
+                placeholder={'Выберите время'}
+                onChange={() => {}}
+                className={styles.select}
+                options={
+                  games
+                    ? games.map(games => {
+                        return { value: games.id, label: games.title };
+                      })
+                    : []
+                }
+              />
+            </div>
+            <div className={styles.filterBlock}>
+              <label>Как часто</label>
+              <Select
+                placeholder={''}
+                onChange={() => {}}
+                className={styles.select}
+                options={
+                  games
+                    ? games.map(games => {
+                        return { value: games.id, label: games.title };
+                      })
+                    : []
+                }
+              />
+            </div>
           </Panel>
         </Collapse>
       )}

@@ -24,7 +24,8 @@ const PersonalInfo = ({ errors, register, setValue, formValues }: IPersonalInfoP
         <div className={styles.inputWrapper}>
           <CustomLabel>Дата рождения</CustomLabel>
           <DatePicker
-            className={styles.fullWidth}
+            placeholder={'Выберите дату рождения'}
+            className={`${styles.fullWidth} ${styles.customDatePicker}`}
             status={errors.birthday ? 'error' : ''}
             onChange={date => setValue('birthday', date?.toDate())}
             value={formValues.birthday ? dayjs(formValues.birthday) : null}
@@ -33,7 +34,7 @@ const PersonalInfo = ({ errors, register, setValue, formValues }: IPersonalInfoP
         </div>
       </div>
 
-      <div className={styles.row} style={{ gap: 50 }}>
+      <div className={styles.row} style={{ gap: 51 }}>
         <div className={styles.radioGroup}>
           <CustomLabel>Пол</CustomLabel>
           <Radio.Group value={formValues.gender} onChange={e => setValue('gender', e.target.value)}>

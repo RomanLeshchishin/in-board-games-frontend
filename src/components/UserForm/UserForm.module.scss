@@ -57,6 +57,10 @@ $error-color: #ff4d4f;
   height: 35px;
 }
 
+.customDatePicker .ant-picker-input > input::placeholder {
+  color: red;
+}
+
 .label {
   font-weight: normal;
   font-size: 14px;

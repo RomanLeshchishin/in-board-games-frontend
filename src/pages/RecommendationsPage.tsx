@@ -1,3 +1,4 @@
+'use client';
 import React from 'react';
 import { CustomLayout } from '@/components/UI/CustomLayout/CustomLayout';
 import styles from '@/pages/SidebarPages.module.scss';
@@ -17,7 +18,17 @@ const RecommendationsPage = () => {
         ) : (
           <div className={styles.cardWrapper}>
             {profiles.map(profile => (
-              <ProfileCard key={profile.profile.id} cardData={profile.profile} />
+              <ProfileCard
+                key={profile.profile.id}
+                cardData={{
+                  user: profile.user,
+                  id: profile.profile.id,
+                  userId: profile.profile.userId,
+                  avatar: profile.profile.avatar,
+                  about: profile.profile.about,
+                  age: profile.profile.age,
+                }}
+              />
             ))}
           </div>
         )}

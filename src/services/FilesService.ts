@@ -24,7 +24,7 @@ export const uploadFiles = async ({ files, modelId, modelType }: UploadFilesArgs
 };
 
 export const getPublicFileById = async (id: string, modelType: FileModelType): Promise<IFileEntity> => {
-  const { data } = await api.get('/files/single/', {
+  const { data } = await api.get('/files/single', {
     params: { id, modelType },
   });
   return data;

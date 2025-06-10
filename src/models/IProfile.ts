@@ -15,6 +15,7 @@ export interface UpdateProfileData {
 }
 
 export interface IRecommendationProfile {
+  user: IUser;
   profile: IProfile;
   compatibility: number;
 }

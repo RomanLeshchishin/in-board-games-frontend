@@ -44,14 +44,14 @@
 
 .buttonsBlock {
   display: flex;
-  padding-top: 600px;
+  padding-top: 530px;
   padding-right: 10px;
   padding-left: 10px;
   flex-direction: column;
   gap: 15px;
 
-  button {
-    width: 270px;
+  .btn {
+    width: 180px !important;
   }
 }
 
